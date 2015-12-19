@@ -3,10 +3,11 @@
  DD命令的解释。 编辑
 定义
 DD是Linux/UNIX 下的一个非常有用的命令，作用是用指定大小的块拷贝一个文件，并在拷贝的同时进行指定的转换。
+
 	
-1.if=文件名：输入文件名，缺省为标准输入。即指定源文件。<if=inputfile>
-3.ibs=bytes：一次读入bytes个字节，即指定一个块大小为bytes个字节。
-obs=bytes：一次输出bytes个字节，即指定一个块大小为bytes个字节。
+1.if=文件名：输入文件名，缺省为标准输入。即指定源文件。<if=inputfile>                                                          
+3.ibs=bytes：一次读入bytes个字节，即指定一个块大小为bytes个字节。  							
+obs=bytes：一次输出bytes个字节，即指定一个块大小为bytes个字节。								
 bs=bytes：同时设置读入/输出的块大小为bytes个字节。
 4.cbs=bytes：一次转换bytes个字节，即指定转换缓冲区大小。
 5.skip=blocks：从输入文件开头跳过blocks个块后再开始复制。
