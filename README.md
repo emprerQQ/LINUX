@@ -33,48 +33,48 @@ dd if=/dev/hdb of=/dev/hdd
 dd if=/dev/hdb of=/root/image	
 3.将备份文件恢复到指定盘
 dd if=/root/image of=/dev/hdb
-4.备份/dev/hdb全盘数据，并利用gzip工具进行压缩，保存到指定路径
-dd if=/dev/hdb | gzip > /root/image.gz
-5.将压缩的备份文件恢复到指定盘
-gzip -dc /root/image.gz | dd of=/dev/hdb
-6.备份磁盘开始的512个字节大小的MBR信息到指定文件
+4.备份/dev/hdb全盘数据，并利用gzip工具进行压缩，保存到指定路径	
+dd if=/dev/hdb | gzip > /root/image.gz	
+5.将压缩的备份文件恢复到指定盘	
+gzip -dc /root/image.gz | dd of=/dev/hdb	
+6.备份磁盘开始的512个字节大小的MBR信息到指定文件	
 dd if=/dev/hda of=/root/image count=1 bs=512
-count=1指仅拷贝一个块；bs=512指块大小为512个字节。
-恢复：
-dd if=/root/image of=/dev/hda
-7.备份软盘
-dd if=/dev/fd0 of=disk.img count=1 bs=1440k
-(即块大小为1.44M)
-8.拷贝内存内容到硬盘
-dd if=/dev/mem of=/root/mem.bin bs=1024
-(指定块大小为1k)
-9.拷贝光盘内容到指定文件夹，并保存为cd.iso文件
-dd if=/dev/cdrom(hdc) of=/root/cd.iso
-10.增加swap分区文件大小
-第一步：创建一个大小为256M的文件：
-dd if=/dev/zero of=/swapfile bs=1024 count=262144
-第二步：把这个文件变成swap文件：
-mkswap /swapfile
-第三步：启用这个swap文件：
-swapon /swapfile
-第四步：编辑/etc/fstab文件，使在每次开机时自动加载swap文件：
-/swapfile swap swap default 0 0
-11.销毁磁盘数据
-dd if=/dev/urandom of=/dev/hda1
-注意：利用随机的数据填充硬盘，在某些必要的场合可以用来销毁数据。
-12.测试硬盘的读写速度
-dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file
-dd if=/root/1Gb.file bs=64k | dd of=/dev/null
-通过以上两个命令输出的命令执行时间，可以计算出硬盘的读、写速度。
-13.确定硬盘的最佳块大小：
-dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file
-dd if=/dev/zero bs=2048 count=500000 of=/root/1Gb.file
-dd if=/dev/zero bs=4096 count=250000 of=/root/1Gb.file
-dd if=/dev/zero bs=8192 count=125000 of=/root/1Gb.file
-通过比较以上命令输出中所显示的命令执行时间，即可确定系统最佳的块大小。
-14.修复硬盘
-dd if=/dev/sda of=/dev/sda
-当硬盘较长时间（比如1，2年）放置不使用后，磁盘上会产生magnetic fluxpoint。当磁头读到这些区域时会遇到困难，并可能导致I/O错误。当这种情况影响到硬盘的第一个扇区时，可能导致硬盘报废。上边的命令有可能使这些数据起死回生。且这个过程是安全，高效的。
-15.dd命令做usb启动盘
-dd if=xxx.iso of=/dev/sdb bs=1M
+count=1指仅拷贝一个块；bs=512指块大小为512个字节。	
+恢复：	
+dd if=/root/image of=/dev/hda	
+7.备份软盘	
+dd if=/dev/fd0 of=disk.img count=1 bs=1440k	
+(即块大小为1.44M)	
+8.拷贝内存内容到硬盘	
+dd if=/dev/mem of=/root/mem.bin bs=1024	
+(指定块大小为1k)	
+9.拷贝光盘内容到指定文件夹，并保存为cd.iso文件	
+dd if=/dev/cdrom(hdc) of=/root/cd.iso	
+10.增加swap分区文件大小	
+第一步：创建一个大小为256M的文件：	
+dd if=/dev/zero of=/swapfile bs=1024 count=262144	
+第二步：把这个文件变成swap文件：	
+mkswap /swapfile	
+第三步：启用这个swap文件：	
+swapon /swapfile	
+第四步：编辑/etc/fstab文件，使在每次开机时自动加载swap文件：	
+/swapfile swap swap default 0 0	
+11.销毁磁盘数据	
+dd if=/dev/urandom of=/dev/hda1	
+注意：利用随机的数据填充硬盘，在某些必要的场合可以用来销毁数据。	
+12.测试硬盘的读写速度	
+dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file	
+dd if=/root/1Gb.file bs=64k | dd of=/dev/null	
+通过以上两个命令输出的命令执行时间，可以计算出硬盘的读、写速度。	
+13.确定硬盘的最佳块大小：	
+dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file	
+dd if=/dev/zero bs=2048 count=500000 of=/root/1Gb.file	
+dd if=/dev/zero bs=4096 count=250000 of=/root/1Gb.file	
+dd if=/dev/zero bs=8192 count=125000 of=/root/1Gb.file	
+通过比较以上命令输出中所显示的命令执行时间，即可确定系统最佳的块大小。	
+14.修复硬盘	
+dd if=/dev/sda of=/dev/sda	
+当硬盘较长时间（比如1，2年）放置不使用后，磁盘上会产生magneti	 fluxpoint。当磁头读到这些区域时会遇到困难，并可能导致I/O错误。当这种情况影响到硬盘的第一个扇区时，可能导致硬盘报废。上边的命令有可能使这些数据起死回生。且这个过程是安全，高效的。	
+15.dd命令做usb启动盘	
+dd if=xxx.iso of=/dev/sdb bs=1M	
 root用户或者sudo，用以上命令前必须卸载u盘,sdb是你的u盘,bs=1M是块的大小,后面的数值大,写的速度相对块一点,但也不是无限的,我一般选2M,注意,执行命令后很块完成,但u盘还在闪,等不闪了,安全移除。
